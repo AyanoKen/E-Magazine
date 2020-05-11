@@ -1,0 +1,11 @@
+{
+  "name": "tsunduko",
+  "version": "1.0.0",
+  "description": "A Online Magazine Webpage",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kireet Gannavarapu",
+  "license": "ISC"
+}
