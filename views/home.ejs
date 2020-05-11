@@ -1,35 +1,37 @@
 <%- include("partials/home-header"); %>
 
+<h1 class="page-title"><%=pageTitle%></h1>
+
+
+
+
+
 <div class="row">
 
   <div class="col-md-9">
 
-    <div class="card">
-      <div class="card-body">
-
-        <div class="row">
-
-          <div class="col-md-4">
-            <img class="card-img-top" src="https://picsum.photos/320" alt="Card image cap">
-          </div>
-
-          <div class="col-md-8">
-            <div class="card-header">
-              <h5 class="card-title">Card Title</h5>
-              <p class="card-text" style="text-align:right;">By Kireet</p>
+    <%articles.forEach(function(article){%>
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <img class="card-img-top" src="https://picsum.photos/320" alt="Card image cap">
             </div>
-            <p class="card-text">Quick Example text ma frienddddddQuick Example text ma frienddddddQuick Example text ma friendddddd
-            Quick Example text ma frienddddddQuick Example text ma friendddddd</p>
-            <a href="#" class="btn btn-primary">Read More</a>
-            <div class="card-footer">
-              <p class="card-text">April, 2020</p>
+            <div class="col-md-8">
+              <div class="card-header">
+                <h5 class="card-title"><%=article.title%></h5>
+                <p class="card-text" style="text-align:right;"><%="By " + article.author%></p>
+              </div>
+              <p class="card-text"><%=article.content.substring(0,200) + "..."%></p>
+              <a href="#" class="btn btn-primary">Read More</a>
+              <div class="card-footer">
+                <p class="card-text"><%=article.month%>, <%=article.year%></p>
+              </div>
             </div>
           </div>
-
         </div>
-
       </div>
-    </div>
+    <%});%>
 
   </div>
 
