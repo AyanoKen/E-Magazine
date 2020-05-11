@@ -23,8 +23,27 @@ html{
   padding-top: 80px;
 }
 
+.card{
+  margin-bottom: 16px;
+  box-shadow: 0 0 4px;
+}
+
+.card:hover{
+  box-shadow: 0 0 32px #8566aa;
+}
+
+.card-header{
+  background-color: white;
+}
+
+.card-footer{
+  background-color: white;
+  border: none;
+  text-align: right;
+}
+
 .footer-padding {
-	padding-bottom: 60px;
+	padding: 60px;
 }
 
 .footer {

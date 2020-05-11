@@ -1,0 +1,31 @@
+<%- include("partials/home-header"); %>
+
+<h1>Compose</h1>
+
+<form class="" action="/compose" method="post">
+  <div class="form-group">
+    <label><strong>Title</strong></label>
+    <input type="text" name="title" class="form-control">
+  </div>
+  <div class="form-group">
+    <label><strong>Author</strong></label>
+    <input type="text" name="authorName" class="form-control">
+  </div>
+  <div class="form-group">
+    <label><strong>Article</strong></label>
+    <textarea name="content" rows="8" cols="80" class="form-control"></textarea>
+  </div>
+  <div class="form-group">
+    <label><strong>Image Url</strong></label>
+    <input type="text" name="image" class="form-control">
+  </div>
+  <div class="form-group">
+    <label><strong>Date</strong></label>
+    <input type="number" name="day" min="1" max="31" placeholder="day (1-31)">
+    <input type="number" name="month" min="1" max="12" placeholder="month (1-12)">
+    <input type="number" name="year" placeholder="year (yyyy)">
+  </div>
+  <button type="submit" class="btn btn-lg btn-primary">Publish</button>
+</form>
+
+<%- include("partials/home-footer"); %>
