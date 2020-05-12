@@ -42,6 +42,12 @@ html{
   text-align: right;
 }
 
+.page-layout{
+  margin: 2rem 1rem;
+  box-shadow: 0 0 1px;
+  padding: 2rem;
+}
+
 .footer-padding {
 	padding: 60px;
 }

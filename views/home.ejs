@@ -2,10 +2,6 @@
 
 <h1 class="page-title"><%=pageTitle%></h1>
 
-
-
-
-
 <div class="row">
 
   <div class="col-md-9">
@@ -14,8 +10,8 @@
       <div class="card">
         <div class="card-body">
           <div class="row">
-            <div class="col-md-4">
-              <img class="card-img-top" src="https://picsum.photos/320" alt="Card image cap">
+            <div class="col-md-4" style="text-align: center;">
+              <img class="card-img-top" src="<%=article.imageUrl%>" style="height:100%;overflow:hidden;" alt="Card image cap">
             </div>
             <div class="col-md-8">
               <div class="card-header">
@@ -23,7 +19,7 @@
                 <p class="card-text" style="text-align:right;"><%="By " + article.author%></p>
               </div>
               <p class="card-text"><%=article.content.substring(0,200) + "..."%></p>
-              <a href="#" class="btn btn-primary">Read More</a>
+              <a href="/articles/<%=article._id%>" class="btn btn-primary">Read More</a>
               <div class="card-footer">
                 <p class="card-text"><%=article.month%>, <%=article.year%></p>
               </div>
@@ -40,8 +36,4 @@
   </div>
 </div>
 
-
-
-
-
-<%- include("partials/home-footer"); %>
+<%- include("partials/footer"); %>

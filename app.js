@@ -9,7 +9,7 @@ const app = express();
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 
 mongoose.connect("mongodb://localhost:27017/magazineDB", {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -64,6 +64,14 @@ app.post("/compose", function(req, res){
     }else{
       console.log(err);
     }
+  });
+});
+
+app.get("/articles/:articleId", function(req, res){
+  const articleId = req.params.articleId;
+
+  Article.findOne({_id: articleId}, function(err, result){
+    res.render("post", {result: result});
   });
 });
 
