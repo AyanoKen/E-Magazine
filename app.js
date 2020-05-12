@@ -24,7 +24,15 @@ const articleSchema = {
   year: Number
 };
 
+const authorSchema = {
+  authorName: String,
+  authorBio: String,
+  authorImage: String,
+  authorBatch: Number
+};
+
 const Article = mongoose.model("Article", articleSchema);
+const Author = mongoose.model("Author", authorSchema);
 
 app.get("/", function(req, res){
   const date = new Date();
@@ -86,6 +94,55 @@ app.get("/genres/:genre", function(req, res){
       console.log(err);
     }else{
       res.render("home", {pageTitle: _.startCase(genre), articles: results});
+    }
+  });
+});
+
+app.get("/createAuthor", function(req, res){
+  res.render("create-author");
+});
+
+app.post("/createAuthor", function(req, res){
+  const authordetails = new Author({
+    authorName: _.camelCase(req.body.authorName),
+    authorBio: req.body.authorBio,
+    authorImage: req.body.authorImage,
+    authorBatch: req.body.authorBatch
+  });
+
+  authordetails.save(function(err){
+    if(err){
+      console.log(err);
+    }else{
+      res.redirect("/authors");
+    }
+  });
+});
+
+app.get("/authors", function(req, res){
+  Author.find({}, function(err, results){
+    if(err){
+      console.log(err);
+    }else{
+      res.render("authorsList", {authors: results});
+    }
+  });
+});
+
+app.get("/authors/:authorId", function(req, res){
+  const authorId = req.params.authorId;
+
+  Author.findOne({_id: authorId}, function(err, result){
+    if(err){
+      console.log(err);
+    }else{
+      if(result){
+        Article.find({author: result.authorName}, function(error, works){
+          if(!err){
+            res.render("author", {result: result, name: _.startCase(result.authorName), works: works});
+          }
+        });
+      }
     }
   });
 });

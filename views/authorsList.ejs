@@ -1,0 +1,7 @@
+<%-include("partials/home-header")%>
+
+  <%authors.forEach(function(author){%>
+    <a href="/authors/<%=author._id%>"><%=author.authorName%></a><br />
+  <%});%>
+
+<%-include("partials/footer")%>

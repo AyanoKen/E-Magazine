@@ -2,14 +2,16 @@
 
 <div class="row">
   <div class="col-md-4">
-    <img src="C:/Users/kingk/Downloads/MyImage" alt="Kireet Image">
+    <img src="<%=result.authorImage%>" style="width: 100%;" alt="Author's Image">
   </div>
   <div class="col-md-8">
     <div class="page-layout">
-      <h1>Kireet Gannavarapu</h1>
-      <p>Hi, I am Kireet. Btech CSC of 2018-22 batch. I am the founder of E-Tsunduko and ofc the first chief editor</p>
+      <h1><%=name%></h1>
+      <p><%=result.authorBio%></p>
       <h2>Works</h2>
-      <p></p>
+      <%works.forEach(function(work){%>
+        <a href="/articles/<%=work._id%>"><%=work.title%></a>
+      <%});%>
     </div>
   </div>
 </div>
