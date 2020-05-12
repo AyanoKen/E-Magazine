@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const _ = require("lodash");
 const mongoose = require("mongoose");
 
 const app = express();
@@ -33,12 +34,10 @@ app.get("/", function(req, res){
     if(err){
       console.log(err);
     }else{
-      if(results){
-        res.render("home", {
-          pageTitle: "New Articles",
-          articles: results
-        });
-      }
+      res.render("home", {
+        pageTitle: "New Articles",
+        articles: results
+      });
     }
   });
 });
@@ -50,10 +49,10 @@ app.get("/compose", function(req, res){
 app.post("/compose", function(req, res){
   const articleDetails = new Article({
     title: req.body.title,
-    author: req.body.authorName,
+    author: _.camelCase(req.body.authorName),
     content: req.body.content,
     imageUrl: req.body.image,
-    genre: req.body.genre,
+    genre: _.camelCase(req.body.genre),
     month: req.body.month,
     year: req.body.year
   });
@@ -71,7 +70,23 @@ app.get("/articles/:articleId", function(req, res){
   const articleId = req.params.articleId;
 
   Article.findOne({_id: articleId}, function(err, result){
-    res.render("post", {result: result});
+    if(err){
+      console.log(err);
+    }else{
+      res.render("post", {result: result});
+    }
+  });
+});
+
+app.get("/genres/:genre", function(req, res){
+  const genre = req.params.genre;
+
+  Article.find({genre: genre}, function(err, results){
+    if(err){
+      console.log(err);
+    }else{
+      res.render("home", {pageTitle: _.startCase(genre), articles: results});
+    }
   });
 });
 
