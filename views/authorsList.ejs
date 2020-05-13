@@ -1,7 +1,9 @@
 <%-include("partials/home-header")%>
 
-  <%authors.forEach(function(author){%>
-    <a href="/authors/<%=author._id%>"><%=author.authorName%></a><br />
-  <%});%>
+  <div class="list-group authorsList">
+    <%authors.forEach(function(author){%>
+      <button type="button" href="/authors/<%=author._id%>" class="btn list-group-item btn-secondary"><%=author.authorName%></button>
+    <%});%>
+  </div>
 
 <%-include("partials/footer")%>

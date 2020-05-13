@@ -6,7 +6,15 @@
 
 <div id="body" class="container">
 
-  <div class="page-layout">
-    <h1 class="page-title"><%=result.title%></h1>
-    <p class="page-article"><%-result.content%></p>
+  <div class="card page-layout">
+    <div class="card-header">
+      <h1 class="page-title"><%=result.title%></h1>
+    </div>
+    <div class="card-body">
+      <p class="page-article"><%-result.content%></p>
+    </div>
+    <div class="card-footer">
+      <p>Author</p>
+      <a href="/authors/<%=authorInfo._id%>"><%=authorName%></a>
+    </div>
   </div>

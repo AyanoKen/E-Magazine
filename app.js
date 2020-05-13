@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -9,14 +10,13 @@ const passportLocalMongoose = require("passport-local-mongoose");
 
 const app = express();
 
-
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 
 app.use(session({
-  secret: "Natsu Dragneel Is The Best.",
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false
 }));
@@ -51,27 +51,14 @@ const adminSchema = new mongoose.Schema({
 
 adminSchema.plugin(passportLocalMongoose);
 
-// const editorSchema = new mongoose.Schema({
-//   username: String,
-//   password: String
-// });
-
-// editorSchema.plugin(passportLocalMongoose);
-
 const Article = mongoose.model("Article", articleSchema);
 const Author = mongoose.model("Author", authorSchema);
 const Admin = mongoose.model("Admin", adminSchema);
-// const Editor = mongoose.model("Editor", editorSchema);
 
 passport.use(Admin.createStrategy());
 
 passport.serializeUser(Admin.serializeUser());
 passport.deserializeUser(Admin.deserializeUser());
-
-// passport.use(Editor.createStrategy());
-//
-// passport.serializeUser(Editor.serializeUser());
-// passport.deserializeUser(Editor.deserializeUser());
 
 app.get("/", function(req, res){
   const date = new Date();
@@ -89,6 +76,10 @@ app.get("/", function(req, res){
   });
 });
 
+app.get("/about", function(req, res){
+  res.render("about");
+});
+
 app.get("/compose", function(req, res){
   if(req.isAuthenticated()){
     res.render("compose");
@@ -96,7 +87,6 @@ app.get("/compose", function(req, res){
     res.redirect("/adminLogin");
   }
 });
-
 app.post("/compose", function(req, res){
   const articleDetails = new Article({
     title: req.body.title,
@@ -107,7 +97,6 @@ app.post("/compose", function(req, res){
     month: req.body.month,
     year: req.body.year
   });
-
   articleDetails.save(function(err){
     if(!err){
       res.redirect("/");
@@ -124,7 +113,9 @@ app.get("/articles/:articleId", function(req, res){
     if(err){
       console.log(err);
     }else{
-      res.render("post", {result: result});
+      Author.findOne({authorName: result.author}, function(err, result2){
+        res.render("post", {result: result, authorInfo: result2, authorName: _.startCase(result2.authorName)});
+      });
     }
   });
 });
@@ -156,7 +147,6 @@ app.post("/createAuthor", function(req, res){
     authorImage: req.body.authorImage,
     authorBatch: req.body.authorBatch
   });
-
   authordetails.save(function(err){
     if(err){
       console.log(err);
@@ -178,7 +168,6 @@ app.get("/authors", function(req, res){
 
 app.get("/authors/:authorId", function(req, res){
   const authorId = req.params.authorId;
-
   Author.findOne({_id: authorId}, function(err, result){
     if(err){
       console.log(err);
@@ -201,7 +190,6 @@ app.get("/createAdmin", function(req, res){
     res.redirect("/adminLogin");
   }
 });
-
 app.post("/createAdmin", function(req, res){
   Admin.register({username: req.body.username}, req.body.password, function(err, admin){
     if(err){
@@ -218,13 +206,11 @@ app.post("/createAdmin", function(req, res){
 app.get("/adminLogin", function(req, res){
   res.render("adminLogin");
 });
-
 app.post("/adminLogin", function(req, res){
   const newAdmin = new Admin({
     username: req.body.username,
     password: req.body.password
   });
-
   req.login(newAdmin, function(err){
     if(err){
       console.log(err);

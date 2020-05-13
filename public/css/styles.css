@@ -5,6 +5,10 @@ html{
   padding: 0;
 }
 
+body{
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
 .navbar{
   background-color: #8566aa;
 }
@@ -17,18 +21,33 @@ html{
   /* height: 400px; */
 }
 
+.page-title{
+  color: #8566aa;
+  text-shadow: 0 0 5px;
+  font-family: 'Pangolin', cursive;
+}
+
+.post-title{
+  color: #8566aa;
+  font-size: 1.5rem;
+}
+
+.post-text{
+  font-size: 0.9rem;
+}
+
 .heading{
   color: #f4f4f4;
   padding: 40px;
   padding-top: 80px;
 }
 
-.card{
+.home-card{
   margin-bottom: 16px;
   box-shadow: 0 0 4px;
 }
 
-.card:hover{
+.home-card:hover{
   box-shadow: 0 0 32px #8566aa;
 }
 
@@ -43,9 +62,28 @@ html{
 }
 
 .page-layout{
-  margin: 2rem 1rem;
+  margin: 4% 2%;
   box-shadow: 0 0 1px;
-  padding: 2rem;
+  padding: 2%;
+}
+
+.page-article{
+  font-size: 1rem;
+}
+
+.authorsList{
+  box-shadow: 0 0 32px #8566aa;
+  margin: 8%;
+}
+
+.list-group{
+  border-radius: 0;
+}
+
+.btn-secondary{
+  background-color: #8566aa;
+  border-radius: 0;
+  font-size: 1.25rem;
 }
 
 .footer-padding {
