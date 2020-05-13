@@ -2,7 +2,7 @@
 
   <div class="list-group authorsList">
     <%authors.forEach(function(author){%>
-      <button type="button" href="/authors/<%=author._id%>" class="btn list-group-item btn-secondary"><%=author.authorName%></button>
+      <a type="button" href="/authors/<%=author._id%>" class="btn list-group-item btn-secondary"><%=author.authorName%></a>
     <%});%>
   </div>
 
