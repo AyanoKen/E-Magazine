@@ -3,6 +3,9 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require("lodash");
 const mongoose = require("mongoose");
+const session = require("express-session");
+const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
 
 const app = express();
 
@@ -12,7 +15,17 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 
+app.use(session({
+  secret: "Natsu Dragneel Is The Best.",
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 mongoose.connect("mongodb://localhost:27017/magazineDB", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.set("useCreateIndex", true);
 
 const articleSchema = {
   title: String,
@@ -31,8 +44,34 @@ const authorSchema = {
   authorBatch: Number
 };
 
+const adminSchema = new mongoose.Schema({
+  username: String,
+  password: String
+});
+
+adminSchema.plugin(passportLocalMongoose);
+
+// const editorSchema = new mongoose.Schema({
+//   username: String,
+//   password: String
+// });
+
+// editorSchema.plugin(passportLocalMongoose);
+
 const Article = mongoose.model("Article", articleSchema);
 const Author = mongoose.model("Author", authorSchema);
+const Admin = mongoose.model("Admin", adminSchema);
+// const Editor = mongoose.model("Editor", editorSchema);
+
+passport.use(Admin.createStrategy());
+
+passport.serializeUser(Admin.serializeUser());
+passport.deserializeUser(Admin.deserializeUser());
+
+// passport.use(Editor.createStrategy());
+//
+// passport.serializeUser(Editor.serializeUser());
+// passport.deserializeUser(Editor.deserializeUser());
 
 app.get("/", function(req, res){
   const date = new Date();
@@ -51,7 +90,11 @@ app.get("/", function(req, res){
 });
 
 app.get("/compose", function(req, res){
-  res.render("compose");
+  if(req.isAuthenticated()){
+    res.render("compose");
+  }else{
+    res.redirect("/adminLogin");
+  }
 });
 
 app.post("/compose", function(req, res){
@@ -99,7 +142,11 @@ app.get("/genres/:genre", function(req, res){
 });
 
 app.get("/createAuthor", function(req, res){
-  res.render("create-author");
+  if(req.isAuthenticated()){
+    res.render("create-author");
+  }else{
+    res.redirect("/adminLogin");
+  }
 });
 
 app.post("/createAuthor", function(req, res){
@@ -147,6 +194,52 @@ app.get("/authors/:authorId", function(req, res){
   });
 });
 
+app.get("/createAdmin", function(req, res){
+  if(req.isAuthenticated()){
+    res.render("registerAdmin");
+  }else{
+    res.redirect("/adminLogin");
+  }
+});
+
+app.post("/createAdmin", function(req, res){
+  Admin.register({username: req.body.username}, req.body.password, function(err, admin){
+    if(err){
+      console.log(err);
+      res.redirect("/createAdmin");
+    }else{
+      passport.authenticate("local")(req, res, function(){
+        res.redirect("/");
+      });
+    }
+  });
+});
+
+app.get("/adminLogin", function(req, res){
+  res.render("adminLogin");
+});
+
+app.post("/adminLogin", function(req, res){
+  const newAdmin = new Admin({
+    username: req.body.username,
+    password: req.body.password
+  });
+
+  req.login(newAdmin, function(err){
+    if(err){
+      console.log(err);
+    }else{
+      passport.authenticate("local")(req, res, function(){
+        res.redirect("/");
+      });
+    }
+  });
+});
+
+app.get("/logout", function(req, res){
+  req.logout();
+  res.redirect("/");
+});
 
 app.listen(3000, function(){
   console.log("Server is up and running");
