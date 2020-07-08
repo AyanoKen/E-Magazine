@@ -1,2 +1,2 @@
 # E-Magazine
-A Website made by me for our university's e - magazine "Tsunduko"
+The magazine website in the style of a university magazine.
