@@ -7,28 +7,28 @@ html{
 
 body{
   font-family: 'Source Sans Pro', sans-serif;
+  background-image: url("../images/brushed-alum-dark.png");
 }
 
 .navbar{
-  background-color: #8566aa;
+  background-color: #393e46;
 }
 
 .container-fluid{
   padding-left: 0;
   padding-right: 0;
   margin-bottom: 24px;
-  background-color: #8566aa;
-  /* height: 400px; */
+  background-color: #393e46;
 }
 
 .page-title{
-  color: #8566aa;
+  color: #393e46;
   text-shadow: 0 0 5px;
   font-family: 'Pangolin', cursive;
 }
 
 .post-title{
-  color: #8566aa;
+  color: #393e46;
   font-size: 1.5rem;
 }
 
@@ -48,7 +48,7 @@ body{
 }
 
 .home-card:hover{
-  box-shadow: 0 0 32px #8566aa;
+  box-shadow: 0 0 32px #393e46;
 }
 
 .card-header{
@@ -72,7 +72,7 @@ body{
 }
 
 .authorsList{
-  box-shadow: 0 0 32px #8566aa;
+  box-shadow: 0 0 32px #393e46;
   margin: 8%;
 }
 
@@ -81,7 +81,7 @@ body{
 }
 
 .btn-secondary{
-  background-color: #8566aa;
+  background-color: #393e46;
   border-radius: 0;
   font-size: 1.25rem;
 }
@@ -96,7 +96,7 @@ body{
 	bottom: 0;
 	width: 100%;
 	height: 60px;
-	background-color: #8566aa;
+	background-color: #393e46;
 }
 
 .footer p {
